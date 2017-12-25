@@ -50,7 +50,7 @@ with open(json_file) as f:
 			continue
 		if res['score'] < threshold:
 			continue
-		fp[res['index']-1].write(json.dumps(dict))
+		fp[res['index']-1].write(json.dumps(dict) + '\n')
 
 
 
