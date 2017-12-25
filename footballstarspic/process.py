@@ -32,24 +32,25 @@ def _mkdir(path):
 rootpath = 'football'
 _mkdir(rootpath)
 Auth = get_qiniu_Auth(access_key,secret_key)
-with open('sofifa_page_data.json') as f:
+with open('4_page_data.json') as f:
 	line = f.readline()
 	dict = json.loads(line)
 	for idx,item in enumerate(dict):
-		url = item['header_img']
+                print( str(idx) + '/' + str(len(dict)) + ' process' + '\n')
+		url = item['avatar']
 
 		uid = url.split('/')[-1].split('.')[0]
-		print(uid)
-		_mkdir(os.path.join(rootpath,uid))
 		print(url)
-
-		new_url = url.replace('/48','')
-		print(url.replace('/48',''))
 		for year in range(12,19):
 			import requests
-			new_url_with_year = new_url.replace('18',str(year))
-			r = requests.get(new_url_with_year)
+			new_url_with_year = url.replace('/18/','/' +str(year)+'/')
+                        try: 
+			    r = requests.get(new_url_with_year,timeout=5)
+                        except Exception as e:
+                            print(e)
+                            continue
 			if r.status_code is 200:
+		                _mkdir(os.path.join(rootpath,uid))
 				save_path = os.path.join(rootpath,uid,str(year) + '.png')
 				print("saving to " + save_path)
 				ftest = open(save_path,'wb')
@@ -58,12 +59,11 @@ with open('sofifa_page_data.json') as f:
 
 #		key = str(idx)+ '.png';
 #		qiniu_url = upload_with_token(Auth,bucket_name,key,localfile)
-		fout = open(os.path.join(rootpath,uid,'info.json'), 'w')
+                if os.path.exists(os.path.join(rootpath,uid)):
+		    fout = open(os.path.join(rootpath,uid,'info.json'), 'w')
 #		item['header_img'] = qiniu_url
-		item['team'] = item['term']
-		item.pop('term',None)
-		fout.write(json.dumps(item) + '\n')
-		fout.close()
+		    fout.write(json.dumps(item) + '\n')
+		    fout.close()
 
 
 
