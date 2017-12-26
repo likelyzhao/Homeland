@@ -8,7 +8,7 @@ bucket_based_url = "Based_url"
 localfile = 'bbb.png'
 json_file = 'splits.json'
 threshold = 0.5
-movie_header = 'http://ozqw10x19.bkt.clouddn.com/'
+movie_header = 'http://ozqw10x19.bkt.clouddn.com/MDB评选TOP250/'
 
 def _mkdir(path):
 	if not os.path.exists(path):
@@ -30,7 +30,7 @@ def make_clips(movie_name,annotation_video):
 		return
 	cmd = 'curl http://xsio.qiniu.io/' + movie_name + ' -H \'Host:ozqw10x19.bkt.clouddn.com\' -o movie_temp'
 	print(cmd)
-#	retcode = subprocess.call([cmd])
+	retcode = subprocess.call([cmd])
 	for idx,anno in enumerate(annotation_video):
 		ffmpeg_cmd = 'ffmpeg'
 		start = anno['time'][0]
@@ -41,8 +41,7 @@ def make_clips(movie_name,annotation_video):
 		ffmpeg_cmd += ' -i movie_temp '
 		ffmpeg_cmd +=  movie_name + '_' + str(idx) + '.mp4'
 		print(ffmpeg_cmd)
-
-#	retcode = subprocess.call([ffmpeg_cmd])
+		subprocess.call([ffmpeg_cmd])
 
 with open(json_file) as f:
 	for line in f.readlines():
