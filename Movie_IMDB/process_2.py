@@ -100,10 +100,11 @@ with open(json_file) as f:
 		if pre_name != filename[0] :
 			if issame :
 				starts,ends,scores= check_splits(frameidx_list)
-				write_json(starts,ends,scores,dict,fout)
+				write_json(starts,ends,scores,bk_dict,fout)
 				frameidx_list=[]
 			print(filename[0])
 			pre_name = filename[0]
+			bk_dict = dict
 			issame = True
 		frameidx_list.append(int(filename[-1].split('.')[0]))
 		if len(filename) !=2:
