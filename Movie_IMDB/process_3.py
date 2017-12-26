@@ -38,9 +38,9 @@ def make_clips(movie_name,annotation_video):
 		end = anno['time'][1]
 
 		ffmpeg_cmd += ' -ss ' + convertframe2time(start)
-		ffmpeg_cmd += ' -t ' + convertframe2time(end)
+		ffmpeg_cmd += ' -t ' + convertframe2time(end-start)
 		ffmpeg_cmd += ' -i movie_temp '
-		ffmpeg_cmd +=  movie_name + '_' + str(idx) + '.mp4'
+		ffmpeg_cmd +=  movie_name + '_' + str(idx) + '.avi'
 		print(ffmpeg_cmd)
 		subprocess.call([ffmpeg_cmd],shell=True)
 
