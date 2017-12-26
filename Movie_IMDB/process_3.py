@@ -29,9 +29,9 @@ def make_clips(movie_name,annotation_video):
 	import subprocess
 	if len(annotation_video) == 0:
 		return
-	cmd = 'curl http://xsio.qiniu.io/IMDB评选TOP250/' + movie_name + ' -H \'Host:ozqw10x19.bkt.clouddn.com\' -o movie_temp'
+	cmd = u'curl http://xsio.qiniu.io/IMDB评选TOP250/' + movie_name + ' -H \'Host:ozqw10x19.bkt.clouddn.com\' -o movie_temp'
 	print(cmd)
-	retcode = subprocess.call([cmd])
+	subprocess.call([cmd],shell=True)
 	for idx,anno in enumerate(annotation_video):
 		ffmpeg_cmd = 'ffmpeg'
 		start = anno['time'][0]
@@ -42,7 +42,7 @@ def make_clips(movie_name,annotation_video):
 		ffmpeg_cmd += ' -i movie_temp '
 		ffmpeg_cmd +=  movie_name + '_' + str(idx) + '.mp4'
 		print(ffmpeg_cmd)
-		subprocess.call([ffmpeg_cmd])
+		subprocess.call([ffmpeg_cmd],shell=True)
 
 with open(json_file) as f:
 	for line in f.readlines():
