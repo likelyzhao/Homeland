@@ -1,3 +1,4 @@
+# -*- coding:utf-8 -*-
 import os
 import json
 
@@ -8,7 +9,7 @@ bucket_based_url = "Based_url"
 localfile = 'bbb.png'
 json_file = 'splits.json'
 threshold = 0.5
-movie_header = 'http://ozqw10x19.bkt.clouddn.com/MDB评选TOP250/'
+movie_header = 'http://ozqw10x19.bkt.clouddn.com/IMDB评选TOP250/'
 
 def _mkdir(path):
 	if not os.path.exists(path):
