@@ -9,7 +9,7 @@ bucket_based_url = "Based_url"
 localfile = 'bbb.png'
 json_file = 'splits.json'
 threshold = 0.5
-movie_header = 'http://ozqw10x19.bkt.clouddn.com/IMDB评选TOP250/'
+#movie_header = 'http://ozqw10x19.bkt.clouddn.com/IMDB评选TOP250/'
 
 def _mkdir(path):
 	if not os.path.exists(path):
@@ -29,7 +29,7 @@ def make_clips(movie_name,annotation_video):
 	import subprocess
 	if len(annotation_video) == 0:
 		return
-	cmd = 'curl http://xsio.qiniu.io/' + movie_name + ' -H \'Host:ozqw10x19.bkt.clouddn.com\' -o movie_temp'
+	cmd = 'curl http://xsio.qiniu.io/IMDB评选TOP250/' + movie_name + ' -H \'Host:ozqw10x19.bkt.clouddn.com\' -o movie_temp'
 	print(cmd)
 	retcode = subprocess.call([cmd])
 	for idx,anno in enumerate(annotation_video):
