@@ -108,22 +108,11 @@ def split(vid_file_path):
 		start+=step
 
 
-fp = []
-pre_name = ""
-issame = False
-frameidx_list =[]
-fout =  open("rename.txt",'w')
-fout2 =  open("remove.txt",'w')
-idx =0
-split('MARCH_YOUTUBE_0.webm')
 
 with open(json_file) as f:
 	for line in f.readlines():
 		filename = line.split('	')[0]
-
-
-fout.close()
-fout2.close()
+		split(filename)
 
 
 
