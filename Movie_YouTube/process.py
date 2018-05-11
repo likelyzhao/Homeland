@@ -111,7 +111,7 @@ def split(vid_file_path):
 
 with open(json_file) as f:
 	for line in f.readlines():
-		filename = line.split('	')[0]
+		filename = line.split('	')[0].strip()
 		split(filename)
 
 

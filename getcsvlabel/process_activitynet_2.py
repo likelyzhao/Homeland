@@ -6,54 +6,36 @@ import json
 with open("activity_net.v1-3.min.json") as f:
 	contents = json.load(f)
 
+id2name ={}
+
 label_list = []
-f1 = open("Activity_train.jsonlist",'w')
-f2 = open("Activity_val.jsonlist",'w')
-f3 = open("Activity_test.jsonlist",'w')
+f1 = open("Activity_label_struct.txt",'w')
 
-for content in contents['database']:
+
+for content in contents['taxonomy']:
 	key = content
-	dicts = contents['database'][key]
-	print(dicts)
+	if key['parentId'] not in id2name:
+		id2name[key['parentId']] = key['parentName']
+	if key['nodeId'] not in id2name:
+		id2name[key['nodeId']] = key['nodeName']
+	#dicts = contents['database']['nodeId']
+#print(sorted(id2name.items()))
+struct = {}
+for content in contents['taxonomy']:
+	if content['parentId'] not in struct:
+		struct[content['parentId']] = []
+		struct[content['parentId']].append(content['nodeId'])
+	else:
+		struct[content['parentId']].append(content['nodeId'])
+
+for id in sorted(struct.items()):
+	if  (id[0]) is None:
+		continue
+	print(id)
+	f1.write(id2name[id[0]] + '\n')
+	for node in id[1]:
+		f1.write(id2name[node] + '\n')
+
+	f1.write('\n'*2)
 
 
-
-	ava_json = {
-		"url":'oxy45khzj.bkt.clouddn.com/v_{0}.mp4'.format(key),
-		"type":"video",
-		"metadata":{
-			"duration":dicts['duration'],
-			"resolution": dicts['resolution'],
-		},
-		"clips":
-			[
-				{
-					"name":"video_activitynet",
-					"type": "video_detection",
-					"version":"1",
-					"data":dicts['annotations']
-
-				}
-			]
-	}
-#	print(ava_json)
-	if dicts['subset'] == 'training':
-		f1.write(json.dumps(ava_json) + '\n')
-		this_label = dicts['annotations'][0]['label']
-		if this_label not in label_list:
-			label_list.append(this_label)
-	if dicts['subset'] == 'validation':
-		f2.write(json.dumps(ava_json) + '\n')
-		this_label = dicts['annotations'][0]['label']
-		if this_label not in label_list:
-			label_list.append(this_label)
-	if dicts['subset'] == 'testing':
-		f3.write(json.dumps(ava_json) + '\n')
-
-f1.close()
-
-with open("Activity_label.txt",'w') as f:
-	for idx,label in enumerate(label_list):
-		f.write(str(idx+1) + '\t'+ label_list[idx] + '\n')
-
-print(label_list)
